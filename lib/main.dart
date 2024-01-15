@@ -70,26 +70,25 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           Positioned(
-  top: 0,
-  right: 0,
-  child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: FloatingActionButton(
-      onPressed: () async {
-        const url = 'https://wa.me/<tu_numero_de_telefono>';
-        if (await canLaunch(url)) {
-          await launch(url);
-        } else {
-          throw 'No se pudo abrir el enlace de WhatsApp.';
-        }
-      },
-      child: Image.asset('assets/wtp.png', width: 24, height: 24),
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-    ),
-  ),
-),
-
+            top: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton(
+                onPressed: () async {
+                  const url = 'https://wa.me/<tu_numero_de_telefono>';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'No se pudo abrir el enlace de WhatsApp.';
+                  }
+                },
+                child: Image.asset('assets/whatsapp_icon.png', width: 24, height: 24),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+              ),
+            ),
+          ),
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 0, 0, 0),

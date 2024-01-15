@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
 
-  flutter:
+flutter:
     sdk: flutter
   url_launcher: ^6.1.13
 
@@ -44,8 +44,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-    flutter_launcher_icons:
- 
   
     
 
@@ -62,9 +60,12 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 uses-material-design: true
+  assets:
+    - assets/
+    - assets/wtp.png
 
-assets:
-    assets/
+ 
+    
 
     
 
