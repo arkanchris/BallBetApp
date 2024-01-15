@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
       logoTeamA: 'assets/cali.png', // Reemplaza con la ruta correcta
       logoTeamB: 'assets/pereira.png', // Reemplaza con la ruta correcta
       details: MatchDetails(
-        image: 'assets/cali_vs_pereira.jpg', // Ajusta la ruta de la imagen
+        image: 'assets/estadio.jpg', // Ajusta la ruta de la imagen
         text: 'Texto sobre el partido Deportivo Cali vs Deportivo Pereira.', // Ajusta el texto
       ),
     ),
