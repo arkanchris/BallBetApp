@@ -65,10 +65,10 @@ class HomeScreen extends StatelessWidget {
     ),
     Match(
       teamA: 'milan',
-      teamB: 'inter',
+      teamB: 'Liverpool',
       date: DateTime.now(),
       logoTeamA: 'assets/milan.png', // Reemplaza con la ruta correcta
-      logoTeamB: 'assets/inter.png', // Reemplaza con la ruta correcta
+      logoTeamB: 'assets/liverpool.png', // Reemplaza con la ruta correcta
       details: MatchDetails(
         image: 'assets/milan_vs_inter.jpg', // Ajusta la ruta de la imagen
         text: 'Texto sobre el partido Milan vs Inter.', // Ajusta el texto
