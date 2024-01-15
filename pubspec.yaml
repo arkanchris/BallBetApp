@@ -27,11 +27,13 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
-dependencies:
 
-flutter:
+
+dependencies:
+  flutter:
     sdk: flutter
   url_launcher: ^6.1.13
+
 
   flutter_svg: ^0.22.0 # (puedes verificar la última versión en pub.dev)
 
@@ -59,10 +61,11 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-uses-material-design: true
+  uses-material-design: true
   assets:
     - assets/
     - assets/wtp.png
+
 
  
     
