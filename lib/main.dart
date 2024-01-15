@@ -3,6 +3,37 @@ import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(const MyApp());
 
+class MatchDetails {
+  final String image;
+  final String text;
+
+  MatchDetails({required this.image, required this.text});
+}
+
+class Match {
+  final String teamA;
+  final String teamB;
+  final DateTime date;
+  bool isFinished;
+  int scoreTeamA;
+  int scoreTeamB;
+  final String logoTeamA;
+  final String logoTeamB;
+  final MatchDetails details;
+
+  Match({
+    required this.teamA,
+    required this.teamB,
+    required this.date,
+    this.isFinished = false,
+    this.scoreTeamA = 0,
+    this.scoreTeamB = 0,
+    required this.logoTeamA,
+    required this.logoTeamB,
+    required this.details,
+  });
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -19,28 +50,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Match {
-  final String teamA;
-  final String teamB;
-  final DateTime date;
-  bool isFinished;
-  int scoreTeamA;
-  int scoreTeamB;
-  final String logoTeamA;
-  final String logoTeamB;
-
-  Match({
-    required this.teamA,
-    required this.teamB,
-    required this.date,
-    this.isFinished = false,
-    this.scoreTeamA = 0,
-    this.scoreTeamB = 0,
-    required this.logoTeamA,
-    required this.logoTeamB,
-  });
-}
-
 class HomeScreen extends StatelessWidget {
   final List<Match> matches = [
     Match(
@@ -49,6 +58,10 @@ class HomeScreen extends StatelessWidget {
       date: DateTime.now(),
       logoTeamA: 'assets/man.png',
       logoTeamB: 'assets/rmadrid.png',
+      details: MatchDetails(
+        image: 'assets/man_vs_rmadrid.jpg', // Ajusta la ruta de la imagen
+        text: 'Texto sobre el partido Manchester United vs Real Madrid.', // Ajusta el texto
+      ),
     ),
     Match(
       teamA: 'milan',
@@ -56,6 +69,10 @@ class HomeScreen extends StatelessWidget {
       date: DateTime.now(),
       logoTeamA: 'assets/milan.png', // Reemplaza con la ruta correcta
       logoTeamB: 'assets/inter.png', // Reemplaza con la ruta correcta
+      details: MatchDetails(
+        image: 'assets/milan_vs_inter.jpg', // Ajusta la ruta de la imagen
+        text: 'Texto sobre el partido Milan vs Inter.', // Ajusta el texto
+      ),
     ),
     Match(
       teamA: 'Deportivo Cali',
@@ -63,6 +80,10 @@ class HomeScreen extends StatelessWidget {
       date: DateTime.now(),
       logoTeamA: 'assets/cali.png', // Reemplaza con la ruta correcta
       logoTeamB: 'assets/pereira.png', // Reemplaza con la ruta correcta
+      details: MatchDetails(
+        image: 'assets/cali_vs_pereira.jpg', // Ajusta la ruta de la imagen
+        text: 'Texto sobre el partido Deportivo Cali vs Deportivo Pereira.', // Ajusta el texto
+      ),
     ),
   ];
 
@@ -245,13 +266,19 @@ class MatchDetailsScreen extends StatelessWidget {
         title: Text('${match.teamA} vs ${match.teamB}'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Fecha: ${match.date.toString()}'),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            match.details.image,
+            width: 200, // Ajusta el tamaño de la imagen según sea necesario
+            height: 200,
+          ),
+          SizedBox(height: 20),
+          Text(match.details.text),
+          SizedBox(height: 20),
+          Text('Fecha: ${match.date.toString()}'),
+        ],
       ),
     );
   }
