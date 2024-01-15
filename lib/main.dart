@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
       logoTeamA: 'assets/man.png',
       logoTeamB: 'assets/rmadrid.png',
       details: MatchDetails(
-        image: 'assets/partidor.jpg', // Ajusta la ruta de la imagen
+        image: 'assets/partidou.png', // Ajusta la ruta de la imagen
         text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.', // Ajusta el texto
       ),
     ),
