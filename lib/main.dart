@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
   final List<Match> matches = [
     Match(
       teamA: 'Manchester United',
-      teamB: 'Real Madrd',
+      teamB: 'Real Madrid',
       date: DateTime.now(),
       logoTeamA: 'assets/man.png',
       logoTeamB: 'assets/rmadrid.png',
