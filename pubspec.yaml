@@ -42,9 +42,9 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
-
-flutter_test:
-  sdk: flutter
+  flutter_test:
+    sdk: flutter
+    flutter_launcher_icons:
  
   
     
@@ -62,8 +62,9 @@ flutter_test:
 # The following section is specific to Flutter packages.
 flutter:
 uses-material-design: true
+
 assets:
-    assets/manu.png
+    assets/
 
     
 

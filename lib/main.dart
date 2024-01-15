@@ -44,13 +44,19 @@ class HomeScreen extends StatelessWidget {
     Match(teamA: 'Deportivo Cali', teamB: 'Millonarios FC', date: DateTime.now()),
   ];
 
+  // Estilo de texto común para "Partidos importantes"
+  final TextStyle titleStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 16.0,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'BallBetApp',
@@ -63,104 +69,148 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          FloatingActionButton(
-            onPressed: () async {
-              const url = 'https://wa.me/<tu_numero_de_telefono>';
-              if (await canLaunch(url)) {
-                await launch(url);
-              } else {
-                throw 'No se pudo abrir el enlace de WhatsApp.';
-              }
-            },
-            child: Icon(Icons.chat),
-            backgroundColor: Colors.green,
-            mini: true,
-          ),
+          Positioned(
+  top: 0,
+  right: 0,
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: FloatingActionButton(
+      onPressed: () async {
+        const url = 'https://wa.me/<tu_numero_de_telefono>';
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'No se pudo abrir el enlace de WhatsApp.';
+        }
+      },
+      child: Image.asset('assets/wtp.png', width: 24, height: 24),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ),
+  ),
+),
+
         ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: matches.length + 1,  // +1 para el letrero "Partido importantes"
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Card(
-                    elevation: 4.0,
-                    margin: EdgeInsets.all(8.0),
+          Card(
+            elevation: 4.0,
+            margin: EdgeInsets.all(8.0),
+            child: ExpansionTile(
+              title: Center(
+                child: Text(
+                  'Partidos importantes:',
+                  style: titleStyle,
+                ),
+              ),
+              children: matches.map((match) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: Colors.blue, width: 2.0),
+                    ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 50.0),  // Centrar el texto
-                      title: Center(
-                        child: Text(
-                          'Partidos importantes:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
+                      leading: Container(
+                        width: 50.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/manu.png'),
+                            fit: BoxFit.cover,
                           ),
+                          shape: BoxShape.circle,
                         ),
                       ),
-                    ),
-                  );
-                }
-                final match = matches[index - 1];
-                return Card(
-                  elevation: 4.0,
-                  margin: EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: Container(
-                      width: 50.0,
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/manu.png'),
-                          fit: BoxFit.cover,
+                      title: Text(
+                        '${match.teamA} vs ${match.teamB}',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
-                        shape: BoxShape.circle,
                       ),
-                    ),
-                    title: Text('${match.teamA} vs ${match.teamB}'),
-                    subtitle: Text('Fecha: ${match.date.toString()}'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MatchDetailsScreen(match: match),
+                      subtitle: Text(
+                        'Fecha: ${match.date.toString()}',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
-                      );
-                    },
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MatchDetailsScreen(match: match),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
-              },
+              }).toList(),
             ),
           ),
+          Spacer(),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FreeForecastScreen(),
+                Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 150.0,
+                  height: 150.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FreeForecastScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                    );
-                  },
-                  child: Text('Pronóstico Gratis'),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Pronóstico Gratis',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VipForecastScreen(),
+                Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 150.0,
+                  height: 150.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VipForecastScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                    );
-                  },
-                  child: Text('VIP'),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'VIP',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -210,8 +260,11 @@ class FreeForecastScreen extends StatelessWidget {
               // Acción cuando se toca una casilla (si es necesario).
             },
             child: Card(
-              child: Center(
-                child: Text('Casilla ${index + 1}'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text('Casilla ${index + 1}'),
+                ),
               ),
             ),
           );
@@ -236,8 +289,11 @@ class VipForecastScreen extends StatelessWidget {
               // Acción cuando se toca una casilla (si es necesario).
             },
             child: Card(
-              child: Center(
-                child: Text('Casilla VIP ${index + 1}'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text('Casilla VIP ${index + 1}'),
+                ),
               ),
             ),
           );
