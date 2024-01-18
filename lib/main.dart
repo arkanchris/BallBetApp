@@ -59,30 +59,30 @@ class HomeScreen extends StatelessWidget {
       logoTeamA: 'assets/ing.png',
       logoTeamB: 'assets/esp.png',
       details: MatchDetails(
-        image: 'assets/partidou.png', // Ajusta la ruta de la imagen
-        text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.', // Ajusta el texto
+        image: 'assets/partidou.png',
+        text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.',
       ),
     ),
     Match(
       teamA: 'milan',
       teamB: 'Liverpool',
       date: DateTime.now(),
-      logoTeamA: 'assets/milan.png', // Reemplaza con la ruta correcta
-      logoTeamB: 'assets/liverpool.png', // Reemplaza con la ruta correcta
+      logoTeamA: 'assets/milan.png',
+      logoTeamB: 'assets/liverpool.png',
       details: MatchDetails(
-        image: 'assets/milan_vs_inter.jpg', // Ajusta la ruta de la imagen
-        text: 'Texto sobre el partido Milan vs Inter.', // Ajusta el texto
+        image: 'assets/milan_vs_inter.jpg',
+        text: 'Texto sobre el partido Milan vs Inter.',
       ),
     ),
     Match(
       teamA: 'Deportivo Cali',
       teamB: 'Deportivo pereira',
       date: DateTime.now(),
-      logoTeamA: 'assets/cali.png', // Reemplaza con la ruta correcta
-      logoTeamB: 'assets/pereira.png', // Reemplaza con la ruta correcta
+      logoTeamA: 'assets/cali.png',
+      logoTeamB: 'assets/pereira.png',
       details: MatchDetails(
-        image: 'assets/estadio.jpg', // Ajusta la ruta de la imagen
-        text: 'Texto sobre el partido Deportivo Cali vs Deportivo Pereira.', // Ajusta el texto
+        image: 'assets/estadio.jpg',
+        text: 'Texto sobre el partido Deportivo Cali vs Deportivo Pereira.',
       ),
     ),
   ];
@@ -156,99 +156,107 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
-      body: Column(
-        children: [
-          Card(
-            elevation: 4.0,
-            margin: EdgeInsets.all(8.0),
-            child: ExpansionTile(
-              title: Center(
-                child: Text(
-                  'Partidos importantes:',
-                  style: titleStyle,
-                ),
-              ),
-              children: matches.map((match) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(color: const Color.fromARGB(255, 120, 121, 122), width: 2.0),
-                    ),
-                    child: ListTile(
-                      leading: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 50.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(match.logoTeamA),
-                                fit: BoxFit.cover,
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(width: 8.0),
-                          Container(
-                            width: 50.0,
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(match.logoTeamB),
-                                fit: BoxFit.cover,
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ],
-                      ),
-                      title: Text(
-                        '${match.teamA} vs ${match.teamB}',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      subtitle: Text(
-                        'Fecha: ${match.date.toString()}',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MatchDetailsScreen(match: match),
-                          ),
-                        );
-                      },
-                    ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/estadio.jpg'), // Reemplaza con la ruta correcta
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Card(
+              elevation: 4.0,
+              margin: EdgeInsets.all(8.0),
+              child: ExpansionTile(
+                title: Center(
+                  child: Text(
+                    'Partidos importantes:',
+                    style: titleStyle,
                   ),
-                );
-              }).toList(),
-            ),
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(10.0),
-                  width: 150.0,
-                  height: 150.0,
-                  child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
                 ),
-                Container(
-                  margin: EdgeInsets.all(10.0),
-                  width: 150.0,
-                  height: 150.0,
-                  child: buildForecastButton(context, 'VIP', 'VIP'),
-                ),
-              ],
+                children: matches.map((match) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: Border.all(color: const Color.fromARGB(255, 120, 121, 122), width: 2.0),
+                      ),
+                      child: ListTile(
+                        leading: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(match.logoTeamA),
+                                  fit: BoxFit.cover,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(width: 8.0),
+                            Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(match.logoTeamB),
+                                  fit: BoxFit.cover,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ],
+                        ),
+                        title: Text(
+                          '${match.teamA} vs ${match.teamB}',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        subtitle: Text(
+                          'Fecha: ${match.date.toString()}',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MatchDetailsScreen(match: match),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
-          ),
-        ],
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    width: 150.0,
+                    height: 150.0,
+                    child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    width: 150.0,
+                    height: 150.0,
+                    child: buildForecastButton(context, 'VIP', 'VIP'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -271,7 +279,7 @@ class MatchDetailsScreen extends StatelessWidget {
         children: [
           Image.asset(
             match.details.image,
-            width: 200, // Ajusta el tamaño de la imagen según sea necesario
+            width: 200,
             height: 200,
           ),
           SizedBox(height: 20),
