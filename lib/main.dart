@@ -51,6 +51,12 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
+  final List<String> sliderImages = [
+    'assets/slider_betplay.jpg',
+    'assets/slider_copa.jpg',
+    'assets/slider_champions.jpg',
+  ];
+
   final List<Match> matches = [
     Match(
       teamA: 'Manchester United',
@@ -76,7 +82,7 @@ class HomeScreen extends StatelessWidget {
     ),
     Match(
       teamA: 'Deportivo Cali',
-      teamB: 'Deportivo pereira',
+      teamB: 'Deportivo Pereira',
       date: DateTime.now(),
       logoTeamA: 'assets/cali.png',
       logoTeamB: 'assets/pereira.png',
@@ -159,12 +165,24 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/estadiof.jpg'), // Reemplaza con la ruta correcta
+            image: AssetImage('assets/estadiof.jpg'), // Reemplaza con la ruta correcta de tu imagen de fondo
             fit: BoxFit.cover,
           ),
         ),
         child: Column(
           children: [
+            Container(
+              height: 200.0,
+              child: PageView.builder(
+                itemCount: sliderImages.length,
+                itemBuilder: (context, index) {
+                  return Image.asset(
+                    sliderImages[index],
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
+            ),
             Card(
               elevation: 4.0,
               margin: EdgeInsets.all(8.0),
@@ -181,7 +199,7 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: const Color.fromARGB(255, 120, 121, 122), width: 2.0),
+                        border: Border.all(color: Color.fromARGB(255, 7, 124, 241), width: 2.0),
                       ),
                       child: ListTile(
                         leading: Row(
