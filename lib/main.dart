@@ -142,7 +142,7 @@ class HomeScreen extends StatelessWidget {
           fontSize: 18.0,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.bold,
-          color: route == 'Free' ? Colors.blue : Colors.red, // Cambia el color del texto según la condición
+          color: route == 'Free' ? Colors.blue : Color.fromARGB(255, 15, 15, 15), // Cambia el color del texto según la condición
         ),
       ),
       child: Text(
