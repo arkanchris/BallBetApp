@@ -56,8 +56,8 @@ class HomeScreen extends StatelessWidget {
       teamA: 'Manchester United',
       teamB: 'Real Madrid',
       date: DateTime.now(),
-      logoTeamA: 'assets/man.png',
-      logoTeamB: 'assets/rmadrid.png',
+      logoTeamA: 'assets/ing.png',
+      logoTeamB: 'assets/esp.png',
       details: MatchDetails(
         image: 'assets/partidou.png', // Ajusta la ruta de la imagen
         text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.', // Ajusta el texto
@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: FloatingActionButton(
               onPressed: () async {
-                const url = 'https://wa.me/<tu_numero_de_telefono>';
+                const url = 'https://telegram.org/<tu_numero_de_telefono>';
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {
