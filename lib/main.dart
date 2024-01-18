@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -52,9 +53,9 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   final List<String> sliderImages = [
-    'assets/slider_betplay.jpg',
-    'assets/slider_copa.jpg',
-    'assets/slider_champions.jpg',
+    'assets/betplay.jpg',
+    'assets/copa.jpg',
+    'assets/champions.jpg',
   ];
 
   final List<Match> matches = [
@@ -98,6 +99,25 @@ class HomeScreen extends StatelessWidget {
     fontSize: 16.0,
   );
 
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  HomeScreen({Key? key}) : super(key: key) {
+    Timer.periodic(Duration(seconds: 4), (timer) {
+      if (_currentPage < sliderImages.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
   ElevatedButton buildForecastButton(BuildContext context, String text, String route) {
     return ElevatedButton(
       onPressed: () {
@@ -110,15 +130,24 @@ class HomeScreen extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(20.0),
+          side: BorderSide(
+            color: route == 'Free' ? Color.fromARGB(255, 94, 88, 88) : Color.fromARGB(255, 129, 120, 120), // Cambia el color del borde según la condición
+            width: 3.0,
+          ),
+        ),
+        elevation: 5.0,
+        padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+        textStyle: TextStyle(
+          fontSize: 18.0,
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.bold,
+          color: route == 'Free' ? Colors.blue : Colors.red, // Cambia el color del texto según la condición
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-        ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -165,7 +194,7 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/estadiof.jpg'), // Reemplaza con la ruta correcta de tu imagen de fondo
+            image: AssetImage('assets/estadiof.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -174,11 +203,22 @@ class HomeScreen extends StatelessWidget {
             Container(
               height: 200.0,
               child: PageView.builder(
+                controller: _pageController,
                 itemCount: sliderImages.length,
                 itemBuilder: (context, index) {
-                  return Image.asset(
-                    sliderImages[index],
-                    fit: BoxFit.cover,
+                  return Container(
+                    margin: EdgeInsets.all(08.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(08.0),
+                      border: Border.all(color: Color.fromARGB(255, 47, 99, 245), width: 2.0),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                        sliderImages[index],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   );
                 },
               ),
@@ -199,15 +239,16 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Color.fromARGB(255, 7, 124, 241), width: 2.0),
+                        border: Border.all(color: Color.fromARGB(255, 2, 2, 2), width: 2.0),
                       ),
                       child: ListTile(
+                        tileColor: Color.fromARGB(255, 255, 255, 255),
                         leading: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              width: 50.0,
-                              height: 50.0,
+                              width: 60.0,
+                              height: 60.0,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(match.logoTeamA),
@@ -232,7 +273,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         title: Text(
                           '${match.teamA} vs ${match.teamB}',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
                         ),
                         subtitle: Text(
                           'Fecha: ${match.date.toString()}',
@@ -260,14 +301,14 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.all(10.0),
-                    width: 150.0,
-                    height: 150.0,
+                    width: 150.0, // Ajusta el ancho del botón
+                    height: 70.0, // Ajusta la altura del botón
                     child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
                   ),
                   Container(
                     margin: EdgeInsets.all(10.0),
-                    width: 150.0,
-                    height: 150.0,
+                    width: 150.0, // Ajusta el ancho del botón
+                    height: 70.0, // Ajusta la altura del botón
                     child: buildForecastButton(context, 'VIP', 'VIP'),
                   ),
                 ],
@@ -324,11 +365,23 @@ class FreeForecastScreen extends StatelessWidget {
             onTap: () {
               // Acción cuando se toca una casilla (si es necesario).
             },
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text('Casilla ${index + 1}'),
+            child: Container(
+              margin: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(width: 3.0, color: Colors.red),
+              ),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text('Casilla ${index + 1}'),
+                  ),
+                ),
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(width: 3.0, color: Colors.red),
                 ),
               ),
             ),
@@ -353,11 +406,23 @@ class VipForecastScreen extends StatelessWidget {
             onTap: () {
               // Acción cuando se toca una casilla (si es necesario).
             },
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text('Casilla VIP ${index + 1}'),
+            child: Container(
+              margin: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(width: 3.0, color: Colors.red),
+              ),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text('Casilla VIP ${index + 1}'),
+                  ),
+                ),
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(width: 3.0, color: Colors.red),
                 ),
               ),
             ),
