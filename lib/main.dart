@@ -147,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                   throw 'No se pudo abrir el enlace de WhatsApp.';
                 }
               },
-              child: Image.asset('assets/wtp.png', width: 36, height: 36),
+              child: Image.asset('assets/telegram.png', width: 36, height: 36),
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
