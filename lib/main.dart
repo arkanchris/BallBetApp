@@ -159,7 +159,7 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/estadio.jpg'), // Reemplaza con la ruta correcta
+            image: AssetImage('assets/estadiof.jpg'), // Reemplaza con la ruta correcta
             fit: BoxFit.cover,
           ),
         ),
