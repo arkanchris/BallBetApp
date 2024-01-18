@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
       teamA: 'Manchester United',
       teamB: 'Real Madrid',
       date: DateTime.now(),
-      logoTeamA: 'assets/ing.png',
+      logoTeamA: 'assets/esp.png',
       logoTeamB: 'assets/esp.png',
       details: MatchDetails(
         image: 'assets/partidou.png',
