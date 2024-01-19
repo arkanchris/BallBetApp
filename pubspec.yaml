@@ -33,6 +33,8 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.1.13
+  
+
 
 
   flutter_svg: ^0.22.0 # (puedes verificar la última versión en pub.dev)

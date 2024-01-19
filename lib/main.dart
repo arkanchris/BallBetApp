@@ -18,8 +18,6 @@ class Match {
   bool isFinished;
   int scoreTeamA;
   int scoreTeamB;
-  final String logoTeamA;
-  final String logoTeamB;
   final MatchDetails details;
 
   Match({
@@ -29,8 +27,6 @@ class Match {
     this.isFinished = false,
     this.scoreTeamA = 0,
     this.scoreTeamB = 0,
-    required this.logoTeamA,
-    required this.logoTeamB,
     required this.details,
   });
 }
@@ -63,19 +59,15 @@ class HomeScreen extends StatelessWidget {
       teamA: 'Manchester United',
       teamB: 'Real Madrid',
       date: DateTime.now(),
-      logoTeamA: 'assets/esp.png',
-      logoTeamB: 'assets/esp.png',
       details: MatchDetails(
         image: 'assets/partidou.png',
         text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.',
       ),
     ),
     Match(
-      teamA: 'milan',
+      teamA: 'Milan',
       teamB: 'Liverpool',
       date: DateTime.now(),
-      logoTeamA: 'assets/milan.png',
-      logoTeamB: 'assets/liverpool.png',
       details: MatchDetails(
         image: 'assets/milan_vs_inter.jpg',
         text: 'Texto sobre el partido Milan vs Inter.',
@@ -85,8 +77,6 @@ class HomeScreen extends StatelessWidget {
       teamA: 'Deportivo Cali',
       teamB: 'Deportivo Pereira',
       date: DateTime.now(),
-      logoTeamA: 'assets/cali.png',
-      logoTeamB: 'assets/pereira.png',
       details: MatchDetails(
         image: 'assets/estadio.jpg',
         text: 'Texto sobre el partido Deportivo Cali vs Deportivo Pereira.',
@@ -225,7 +215,11 @@ class HomeScreen extends StatelessWidget {
                 title: Center(
                   child: Text(
                     'Partidos importantes:',
-                    style: titleStyle,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 5, 4, 77),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 children: matches.map((match) {
@@ -236,52 +230,26 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.0),
                         border: Border.all(color: Color.fromARGB(255, 2, 2, 2), width: 2.0),
                       ),
-                      child: ListTile(
-                        tileColor: Color.fromARGB(255, 255, 255, 255),
-                        leading: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 60.0,
-                              height: 60.0,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(match.logoTeamA),
-                                  fit: BoxFit.cover,
-                                ),
-                                shape: BoxShape.circle,
+                      child: Center(
+                        child: ListTile(
+                          tileColor: Color.fromARGB(255, 0, 0, 0),
+                          title: Text(
+                            '${match.teamA} vs ${match.teamB}',
+                            style: _getTextStyle(match),
+                          ),
+                          subtitle: Text(
+                            'Fecha: ${match.date.toString()}',
+                            style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MatchDetailsScreen(match: match),
                               ),
-                            ),
-                            SizedBox(width: 8.0),
-                            Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(match.logoTeamB),
-                                  fit: BoxFit.cover,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                        title: Text(
-                          '${match.teamA} vs ${match.teamB}',
-                          style: TextStyle(color: Color.fromARGB(200, 0, 0, 0)),
-                        ),
-                        subtitle: Text(
-                          'Fecha: ${match.date.toString()}',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MatchDetailsScreen(match: match),
-                            ),
-                          );
-                        },
                       ),
                     ),
                   );
@@ -314,6 +282,34 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  TextStyle _getTextStyle(Match match) {
+    if (match.teamA == 'Manchester United' && match.teamB == 'Real Madrid') {
+      return TextStyle(
+        color: Color.fromARGB(255, 255, 255, 255),
+        fontSize: 19.0,
+        fontWeight: FontWeight.bold,
+      );
+    } else if (match.teamA == 'Milan' && match.teamB == 'Liverpool') {
+      return TextStyle(
+        color: Color.fromARGB(255, 255, 255, 255),
+        fontSize: 19.0,
+        fontWeight: FontWeight.bold,
+      );
+    } else if (match.teamA == 'Deportivo Cali' && match.teamB == 'Deportivo Pereira') {
+      return TextStyle(
+        color: Color.fromARGB(255, 255, 255, 255),
+        fontSize: 19.0,
+        fontWeight: FontWeight.bold,
+      );
+    } else {
+      return TextStyle(
+        color: Color.fromARGB(199, 255, 255, 255),
+        fontSize: 16.0,
+        fontWeight: FontWeight.normal,
+      );
+    }
+  }
 }
 
 class MatchDetailsScreen extends StatelessWidget {
@@ -336,9 +332,9 @@ class MatchDetailsScreen extends StatelessWidget {
             width: 200,
             height: 200,
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           Text(match.details.text),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           Text('Fecha: ${match.date.toString()}'),
         ],
       ),
@@ -388,41 +384,66 @@ class FreeForecastScreen extends StatelessWidget {
 }
 
 class VipForecastScreen extends StatelessWidget {
+  final List<String> vipOptions = [
+    'Comprar',
+    'Comprar',
+    'Comprar',
+  ];
+
+  final List<String> vipImages = [
+    'assets/apuestas1.jpg',
+    'assets/apuesta2.jpg',
+    'assets/apuesta3.jpg',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('VIP'),
       ),
-      body: GridView.count(
-        crossAxisCount: 1,
-        children: List.generate(3, (index) {
-          return GestureDetector(
-            onTap: () {
-              // Acción cuando se toca una casilla (si es necesario).
-            },
-            child: Container(
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(width: 3.0, color: Colors.red),
-              ),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text('Casilla VIP ${index + 1}'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: vipOptions.asMap().entries.map((entry) {
+          int index = entry.key;
+          String option = entry.value;
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                children: [
+                  Image.asset(
+                    vipImages[index],
+                    width: 100,
+                    height: 100,
                   ),
-                ),
-                elevation: 4.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  side: BorderSide(width: 3.0, color: Colors.red),
-                ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Aquí debes implementar la lógica para abrir la plataforma de Google Payment.
+                      // Puedes usar el método launch de url_launcher.
+                      // Ejemplo:
+                      // const url = 'https://www.ejemplo.com/google-payment?opcion=$option';
+                      // launch(url);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      onPrimary: Colors.white,
+                      padding: EdgeInsets.all(20.0),
+                    ),
+                    child: Text(
+                      option,
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
-        }),
+        }).toList(),
       ),
     );
   }
