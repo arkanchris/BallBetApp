@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   final List<String> sliderImages = [
-    'assets/europal.jpg',
+    "assets/europal.jpg",
     'assets/copa.jpg',
     'assets/champions.jpg',
   ];
@@ -104,12 +104,7 @@ class HomeScreen extends StatelessWidget {
 
   HomeScreen({Key? key}) : super(key: key) {
     Timer.periodic(Duration(seconds: 4), (timer) {
-      if (_currentPage < sliderImages.length - 1) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
+      _currentPage = (_currentPage + 1) % sliderImages.length;
       _pageController.animateToPage(
         _currentPage,
         duration: Duration(milliseconds: 500),
@@ -132,7 +127,7 @@ class HomeScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
           side: BorderSide(
-            color: route == 'Free' ? Color.fromARGB(255, 94, 88, 88) : Color.fromARGB(255, 129, 120, 120), // Cambia el color del borde según la condición
+            color: route == 'Free' ? Color.fromARGB(255, 94, 88, 88) : Color.fromARGB(255, 129, 120, 120),
             width: 3.0,
           ),
         ),
@@ -142,7 +137,7 @@ class HomeScreen extends StatelessWidget {
           fontSize: 18.0,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.bold,
-          color: route == 'Free' ? Colors.blue : Color.fromARGB(255, 15, 15, 15), // Cambia el color del texto según la condición
+          color: route == 'Free' ? Colors.blue : Color.fromARGB(255, 15, 15, 15),
         ),
       ),
       child: Text(
@@ -301,14 +296,14 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.all(10.0),
-                    width: 150.0, // Ajusta el ancho del botón
-                    height: 70.0, // Ajusta la altura del botón
+                    width: 150.0,
+                    height: 70.0,
                     child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
                   ),
                   Container(
                     margin: EdgeInsets.all(10.0),
-                    width: 150.0, // Ajusta el ancho del botón
-                    height: 70.0, // Ajusta la altura del botón
+                    width: 150.0,
+                    height: 70.0,
                     child: buildForecastButton(context, 'VIP', 'VIP'),
                   ),
                 ],
