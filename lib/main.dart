@@ -360,7 +360,7 @@ class FreeForecastScreen extends StatelessWidget {
               margin: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(width: 3.0, color: Colors.red),
+                border: Border.all(width: 10.0, color: const Color.fromARGB(255, 0, 0, 0)),
               ),
               child: Card(
                 child: Padding(
@@ -385,9 +385,9 @@ class FreeForecastScreen extends StatelessWidget {
 
 class VipForecastScreen extends StatelessWidget {
   final List<String> vipOptions = [
-    'Comprar',
-    'Comprar',
-    'Comprar',
+    'Opción 1',
+    'Opción 2',
+    'Opción 3',
   ];
 
   final List<String> vipImages = [
@@ -408,7 +408,7 @@ class VipForecastScreen extends StatelessWidget {
           int index = entry.key;
           String option = entry.value;
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(50.0),
             child: Center(
               child: Column(
                 children: [
@@ -417,7 +417,7 @@ class VipForecastScreen extends StatelessWidget {
                     width: 100,
                     height: 100,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 100),
                   ElevatedButton(
                     onPressed: () {
                       // Aquí debes implementar la lógica para abrir la plataforma de Google Payment.
@@ -435,7 +435,7 @@ class VipForecastScreen extends StatelessWidget {
                       option,
                       style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 16.0,
+                        fontSize: 18.0,
                       ),
                     ),
                   ),
