@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   final List<String> sliderImages = [
-    'assets/betplay.jpg',
+    'assets/europal.jpg',
     'assets/copa.jpg',
     'assets/champions.jpg',
   ];
