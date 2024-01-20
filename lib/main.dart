@@ -387,13 +387,11 @@ class VipForecastScreen extends StatelessWidget {
   final List<String> vipOptions = [
     'Opción 1',
     'Opción 2',
-    'Opción 3',
   ];
 
   final List<String> vipImages = [
-    'assets/apuestas1.jpg',
-    'assets/apuesta2.jpg',
-    'assets/apuesta3.jpg',
+    'assets/membresiad.jpg',
+    'assets/membresiad2.jpg',
   ];
 
   @override
@@ -402,48 +400,71 @@ class VipForecastScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('VIP'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: vipOptions.asMap().entries.map((entry) {
-          int index = entry.key;
-          String option = entry.value;
-          return Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Center(
-              child: Column(
-                children: [
-                  Image.asset(
-                    vipImages[index],
-                    width: 100,
-                    height: 100,
-                  ),
-                  SizedBox(height: 100),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Aquí debes implementar la lógica para abrir la plataforma de Google Payment.
-                      // Puedes usar el método launch de url_launcher.
-                      // Ejemplo:
-                      // const url = 'https://www.ejemplo.com/google-payment?opcion=$option';
-                      // launch(url);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      onPrimary: Colors.white,
-                      padding: EdgeInsets.all(20.0),
-                    ),
-                    child: Text(
-                      option,
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/wembleyvip.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            VipImageWithButton(image: vipImages[0]),
+            VipImageWithButton(image: vipImages[1]),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class VipImageWithButton extends StatelessWidget {
+  final String image;
+
+  VipImageWithButton({required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Transform(
+            transform: Matrix4.translationValues(-60.0, 0.0, 0.0) *
+                Matrix4.diagonal3Values(1.5, 1.5, 1.0),
+            child: Image.asset(
+              image,
+              width: 250,
+              height: 200,
+            ),
+          ),
+          SizedBox(height: 65),
+          Align(
+            alignment: Alignment.center, // Ajusta según tus necesidades
+            child: ElevatedButton(
+              onPressed: () {
+                // Implementa aquí la lógica para la compra del plan
+                // Puedes usar el método launch de url_launcher para redirigir a una página de compra.
+                // Ejemplo:
+                // const url = 'https://www.ejemplo.com/comprar-plan';
+                // launch(url);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 135, 226, 16),
+                onPrimary: const Color.fromARGB(255, 0, 0, 0),
+                padding: EdgeInsets.all(20.0),
+              ),
+              child: Text(
+                'Comprar Membresia',
+                style: TextStyle(
+                  fontSize: 25.0,
+                ),
               ),
             ),
-          );
-        }).toList(),
+          ),
+        ],
       ),
     );
   }
