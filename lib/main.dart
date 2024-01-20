@@ -47,7 +47,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<String> sliderImages = [
     "assets/europal.jpg",
     'assets/copa.jpg',
@@ -92,7 +99,11 @@ class HomeScreen extends StatelessWidget {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  HomeScreen({Key? key}) : super(key: key) {
+  bool isVipAuthenticated = false;
+
+  @override
+  void initState() {
+    super.initState();
     Timer.periodic(Duration(seconds: 4), (timer) {
       _currentPage = (_currentPage + 1) % sliderImages.length;
       _pageController.animateToPage(
@@ -106,12 +117,16 @@ class HomeScreen extends StatelessWidget {
   ElevatedButton buildForecastButton(BuildContext context, String text, String route) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => route == 'Free' ? FreeForecastScreen() : VipForecastScreen(),
-          ),
-        );
+        if (route == 'VIP' && !isVipAuthenticated) {
+          _showVipAuthenticationDialog(context);
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => route == 'Free' ? FreeForecastScreen() : VipForecastScreen(),
+            ),
+          );
+        }
       },
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -136,6 +151,105 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _showVipAuthenticationDialog(BuildContext context) {
+  String? email;
+  String? password;
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Autenticación VIP',
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Correo electrónico',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                onChanged: (value) {
+                  email = value;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Contraseña',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                obscureText: true,
+                onChanged: (value) {
+                  password = value;
+                },
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                    },
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Realizar la autenticación con el servidor aquí.
+                      // Simulamos autenticación exitosa por ahora.
+                      setState(() {
+                        isVipAuthenticated = true;
+                      });
+
+                      Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                    child: Text(
+                      'Confirmar',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -410,8 +524,16 @@ class VipForecastScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            VipImageWithButton(image: vipImages[0]),
-            VipImageWithButton(image: vipImages[1]),
+            VipImageWithButton(
+              image: vipImages[0],
+              buttonColor: Color.fromARGB(255, 7, 236, 57),
+              buttonTextSize: 25.0,
+            ),
+            VipImageWithButton(
+              image: vipImages[1],
+              buttonColor: Color.fromARGB(255, 7, 236, 57),
+              buttonTextSize: 25.0,
+            ),
           ],
         ),
       ),
@@ -421,8 +543,14 @@ class VipForecastScreen extends StatelessWidget {
 
 class VipImageWithButton extends StatelessWidget {
   final String image;
+  final Color? buttonColor;
+  final double? buttonTextSize;
 
-  VipImageWithButton({required this.image});
+  VipImageWithButton({
+    required this.image,
+    this.buttonColor,
+    this.buttonTextSize,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -442,7 +570,7 @@ class VipImageWithButton extends StatelessWidget {
           ),
           SizedBox(height: 65),
           Align(
-            alignment: Alignment.center, // Ajusta según tus necesidades
+            alignment: Alignment.center,
             child: ElevatedButton(
               onPressed: () {
                 // Implementa aquí la lógica para la compra del plan
@@ -452,14 +580,14 @@ class VipImageWithButton extends StatelessWidget {
                 // launch(url);
               },
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 135, 226, 16),
+                primary: buttonColor ?? Color.fromARGB(255, 135, 226, 16),
                 onPrimary: const Color.fromARGB(255, 0, 0, 0),
                 padding: EdgeInsets.all(20.0),
               ),
               child: Text(
                 'Comprar Membresia',
                 style: TextStyle(
-                  fontSize: 25.0,
+                  fontSize: buttonTextSize ?? 25.0,
                 ),
               ),
             ),
