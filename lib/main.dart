@@ -153,106 +153,106 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showVipAuthenticationDialog(BuildContext context) {
-    String? email;
-    String? password;
+  String? email;
+  String? password;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Autenticación VIP',
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Autenticación VIP',
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Correo electrónico',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
-                SizedBox(height: 16.0),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Correo electrónico',
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                      color: const Color.fromARGB(255, 0, 0, 0),
-                    ),
+                onChanged: (value) {
+                  email = value;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Contraseña',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
-                  onChanged: (value) {
-                    email = value;
-                  },
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
-                  obscureText: true,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                      },
-                      child: Text(
-                        'Cancelar',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.red,
-                        ),
+                obscureText: true,
+                onChanged: (value) {
+                  password = value;
+                },
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                    },
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.red,
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Realizar la autenticación con el servidor aquí.
-                        // Simulamos autenticación exitosa por ahora.
-                        setState(() {
-                          isVipAuthenticated = true;
-                        });
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Realizar la autenticación con el servidor aquí.
+                      // Simulamos autenticación exitosa por ahora.
+                      setState(() {
+                        isVipAuthenticated = true;
+                      });
 
-                        Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                      ),
-                      child: Text(
-                        'Confirmar',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.white,
-                        ),
+                      Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                    child: Text(
+                      'Confirmar',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
+
+
 
   @override
-  Widget build
-
-(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -498,9 +498,7 @@ class FreeForecastScreen extends StatelessWidget {
 }
 
 class VipForecastScreen extends StatelessWidget {
-  final List<String> vipOptions
-
- = [
+  final List<String> vipOptions = [
     'Opción 1',
     'Opción 2',
   ];
