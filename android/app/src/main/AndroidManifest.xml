@@ -30,4 +30,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+   android:name="io.flutter.app.FlutterApplication"
+   android:label="ballbetapp1"
+   android:icon="@mipmap/ic_launcher">
 </manifest>

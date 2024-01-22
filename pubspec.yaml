@@ -33,6 +33,8 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.1.13
+  flutter_native_splash: ^0.3.0
+
   
 
 
@@ -46,9 +48,15 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  flutter_native_splash: ^1.3.0
   flutter_test:
     sdk: flutter
   
+flutter_native_splash:
+  color: "#000000" # Color de fondo del SplashScreen
+  image: assets/splash.png # Ruta de la imagen del SplashScreen
+  android: true
+  ios: true
 
 
 
