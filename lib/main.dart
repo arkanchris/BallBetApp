@@ -5,20 +5,20 @@ import 'package:url_launcher/url_launcher.dart';
 void main() => runApp(const MyApp());
 
 class MatchDetails {
-  final String image;
-  final String text;
+   String image;
+   String text;
 
   MatchDetails({required this.image, required this.text});
 }
 
 class Match {
-  final String teamA;
-  final String teamB;
-  final DateTime date;
+   String teamA;
+   String teamB;
+   DateTime date;
   bool isFinished;
   int scoreTeamA;
   int scoreTeamB;
-  final MatchDetails details;
+   MatchDetails details;
 
   Match({
     required this.teamA,
