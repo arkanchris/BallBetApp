@@ -120,6 +120,8 @@ class _HomeScreenState extends State<HomeScreen> {
       onPressed: () {
         if (route == 'VIP') {
           _showVipVerificationDialog(context);
+        } else if (route == 'Membership') {
+          _navigateToMembershipScreen(context);
         } else {
           Navigator.push(
             context,
@@ -242,8 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 18.0,
                           color: Colors.white,
                         ),
-                     
-),
+                      ),
                     ),
                   ],
                 ),
@@ -268,6 +269,15 @@ class _HomeScreenState extends State<HomeScreen> {
       // Mostrar un mensaje de error o realizar alguna acción si la autenticación falla.
       // Puedes agregar aquí un SnackBar o un AlertDialog para informar al usuario.
     }
+  }
+
+  void _navigateToMembershipScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MembershipScreen(),
+      ),
+    );
   }
 
   @override
@@ -390,25 +400,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: 150.0,
-                    height: 70.0,
-                    child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10.0),
-                    width: 150.0,
-                    height: 70.0,
-                    child: buildForecastButton(context, 'VIP', 'VIP'),
-                  ),
-                ],
-              ),
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 150.0,
+                  height: 70.0,
+                  child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 150.0,
+                  height: 70.0,
+                  child: buildForecastButton(context, 'VIP', 'VIP'),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 155.0,
+                  height: 70.0,
+                  child: buildForecastButton(context, 'Membresía', 'Membership'),
+                ),
+              ],
             ),
           ],
         ),
@@ -493,8 +505,7 @@ class FreeForecastScreen extends StatelessWidget {
               margin: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(width:
-                2.0, color: Colors.blue),
+                border: Border.all(width: 2.0, color: Colors.blue),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -606,6 +617,24 @@ class VipForecastScreen extends StatelessWidget {
               ),
             );
           }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class MembershipScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Membresía'),
+      ),
+      body: Center(
+        child: Text(
+          'Obtén acceso exclusivo a pronósticos VIP y más beneficios con nuestra membresía premium.',
+          style: TextStyle(fontSize: 18.0),
+          textAlign: TextAlign.center,
         ),
       ),
     );
