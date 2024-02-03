@@ -62,35 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final List<Match> matches = [
-    Match(
-      teamA: 'Manchester United',
-      teamB: 'Real Madrid',
-      date: DateTime.now(),
-      details: MatchDetails(
-        image: 'assets/partidou.png',
-        text:
-            'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.',
-      ),
+  Match(
+    teamA: 'Manchester United',
+    teamB: 'Real Madrid',
+    date: DateTime.now(),
+    details: MatchDetails(
+      image: 'assets/partidou.png',
+      text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.',
     ),
-    Match(
-      teamA: 'Milan',
-      teamB: 'Liverpool',
-      date: DateTime.now(),
-      details: MatchDetails(
-        image: 'assets/milan_vs_inter.jpg',
-        text: 'Texto sobre el partido Milan vs Inter.',
-      ),
-    ),
-    Match(
-      teamA: 'Deportivo Cali',
-      teamB: 'Deportivo Pereira',
-      date: DateTime.now(),
-      details: MatchDetails(
-        image: 'assets/estadio.jpg',
-        text: 'Texto sobre el partido Deportivo Cali vs Deportivo Pereira.',
-      ),
-    ),
-  ];
+  ),
+  // Eliminado el partido "Milan vs Liverpool"
+];
 
   final TextStyle titleStyle = TextStyle(
     fontWeight: FontWeight.bold,
@@ -248,6 +230,114 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        _showForgotPasswordDialog(context);
+                      },
+                      child: Text(
+                        '¿Olvidaste tu contraseña?',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showForgotPasswordDialog(BuildContext context) {
+    String? email;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Olvidé mi contraseña',
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Ingresa tu correo electrónico asociado a la cuenta VIP para restablecer tu contraseña.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(height: 16.0),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Correo electrónico',
+                    labelStyle: TextStyle(
+                      fontSize: 15.0,
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    email = value;
+                  },
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                      },
+                      child: Text(
+                        'Cancelar',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Aquí puedes implementar la lógica para enviar un correo de restablecimiento de contraseña.
+                        // Simulamos un mensaje de éxito por ahora.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Se ha enviado un correo de restablecimiento de contraseña a $email'),
+                          ),
+                        );
+                        Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                      ),
+                      child: Text(
+                        'Enviar',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -298,24 +388,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FloatingActionButton(
-              onPressed: () async {
-                const url = 'https://telegram.org/<tu_numero_de_telefono>';
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'No se pudo abrir el enlace de WhatsApp.';
-                }
-              },
-              child: Image.asset('assets/telegram.png', width: 36, height: 36),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-            ),
-          ),
-        ],
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
@@ -357,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ExpansionTile(
                 title: Center(
                   child: Text(
-                    'Partidos importantes:',
+                    'Pronosticos Gratuitos',
                     style: TextStyle(
                       color: Color.fromARGB(255, 5, 4, 77),
                       fontSize: 20.0,
@@ -370,28 +442,72 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
                         borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Color.fromARGB(255, 2, 2, 2), width: 2.0),
                       ),
-                      child: Center(
-                        child: ListTile(
-                          tileColor: Color.fromARGB(255, 0, 0, 0),
-                          title: Text(
-                            '${match.teamA} vs ${match.teamB}',
-                            style: _getTextStyle(match),
-                          ),
-                          subtitle: Text(
-                            'Fecha: ${match.date.toString()}',
-                            style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MatchDetailsScreen(match: match),
+                      child: ListTile(
+                        title: Column(
+                          children: [
+                            Text(
+                              '${match.teamA} vs ${match.teamB}',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 5, 4, 77),
                               ),
-                            );
-                          },
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              // Agregando texto personalizado para ambos partidos
+                              match.teamA == 'Manchester United' && match.teamB == 'Real Madrid'
+                                  ? 'Mas de 2.5 goles'
+                                  : match.teamA == 'Milan' && match.teamB == 'Liverpool'
+                                      ? 'Ambos marcan 1ra mitad'
+                                      : 'Texto por defecto para otros partidos',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color.fromARGB(255, 5, 4, 77),
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            if (match.isFinished)
+                              Text(
+                                'Resultado: ${match.scoreTeamA} - ${match.scoreTeamB}',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Color.fromARGB(255, 5, 4, 77),
+                                ),
+                              )
+                            else
+                              Text(
+                                'Hoy 14:30',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Color.fromARGB(255, 5, 4, 77),
+                                ),
+                              ),
+                            SizedBox(height: 8.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MatchDetailsScreen(match: match),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.blue,
+                              ),
+                              child: Text(
+                                'Detalles',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -406,19 +522,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.all(10.0),
                   width: 150.0,
                   height: 70.0,
-                  child: buildForecastButton(context, 'Pronóstico Gratis', 'Free'),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10.0),
-                  width: 150.0,
-                  height: 70.0,
                   child: buildForecastButton(context, 'VIP', 'VIP'),
                 ),
                 Container(
                   margin: EdgeInsets.all(10.0),
                   width: 155.0,
                   height: 70.0,
-                  child: buildForecastButton(context, 'Membresía', 'Membership'),
+                  child: buildForecastButton(context, 'Membresia', 'Membership'),
                 ),
               ],
             ),
@@ -436,12 +546,6 @@ class _HomeScreenState extends State<HomeScreen> {
         fontWeight: FontWeight.bold,
       );
     } else if (match.teamA == 'Milan' && match.teamB == 'Liverpool') {
-      return TextStyle(
-        color: Color.fromARGB(255, 255, 255, 255),
-        fontSize: 19.0,
-        fontWeight: FontWeight.bold,
-      );
-    } else if (match.teamA == 'Deportivo Cali' && match.teamB == 'Deportivo Pereira') {
       return TextStyle(
         color: Color.fromARGB(255, 255, 255, 255),
         fontSize: 19.0,
@@ -505,7 +609,7 @@ class FreeForecastScreen extends StatelessWidget {
               margin: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(width: 2.0, color: Colors.blue),
+                border: Border.all(width: 2.0, color: Color.fromARGB(255, 41, 1, 94)),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -596,22 +700,38 @@ class VipForecastScreen extends StatelessWidget {
                       '${match.teamA} vs ${match.teamB}',
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 19.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
                       'Fecha: ${match.date.toString()}',
-                      style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
+                      style: TextStyle(
+                        color: Color.fromARGB(199, 255, 255, 255),
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MatchDetailsScreen(match: match),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MatchDetailsScreen(match: match),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue,
+                      ),
+                      child: Text(
+                        'Detalles',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -631,10 +751,34 @@ class MembershipScreen extends StatelessWidget {
         title: Text('Membresía'),
       ),
       body: Center(
-        child: Text(
-          'Obtén acceso exclusivo a pronósticos VIP y más beneficios con nuestra membresía premium.',
-          style: TextStyle(fontSize: 18.0),
-          textAlign: TextAlign.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '¡Conviértete en miembro VIP para acceder a pronósticos exclusivos!',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Cerrar la pantalla de membresía
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              child: Text(
+                'Volver',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
