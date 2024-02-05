@@ -62,17 +62,26 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final List<Match> matches = [
-  Match(
-    teamA: 'Manchester United',
-    teamB: 'Real Madrid',
-    date: DateTime.now(),
-    details: MatchDetails(
-      image: 'assets/partidou.png',
-      text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.',
+    Match(
+      teamA: 'Manchester United',
+      teamB: 'Real Madrid',
+      date: DateTime.now(),
+      details: MatchDetails(
+        image: 'assets/partidou.png',
+        text: 'Con las imágenes de los dos golazos del Real Madrid me despido y pongo punto y final a este directo. Recordar que el próximo compromiso de los blancos será el Clásico del sábado 29 de julio a las 23.00 horas en el AT&T Stadium de Dallas. ¡Un saludo!.',
+      ),
     ),
-  ),
-  // Eliminado el partido "Milan vs Liverpool"
-];
+    // Eliminado el partido "Milan vs Liverpool"
+    Match(
+      teamA: 'Barcelona',
+      teamB: 'Bayern Munich',
+      date: DateTime.now().add(Duration(days: 1)), // Cambiar la fecha según sea necesario
+      details: MatchDetails(
+        image: 'assets/partido3.jpg', // Cambiar la imagen según sea necesario
+        text: 'Descripción del partido Barcelona vs Bayern Munich.',
+      ),
+    ),
+  ];
 
   final TextStyle titleStyle = TextStyle(
     fontWeight: FontWeight.bold,
@@ -257,108 +266,81 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showForgotPasswordDialog(BuildContext context) {
-    String? email;
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+        return AlertDialog(
+          title: Text('Recuperar contraseña'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Ingresa tu correo electrónico y te enviaremos instrucciones para recuperar tu contraseña.'),
+              SizedBox(height: 16.0),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Correo electrónico',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+              ),
+            ],
           ),
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Olvidé mi contraseña',
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                Text(
-                  'Ingresa tu correo electrónico asociado a la cuenta VIP para restablecer tu contraseña.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Correo electrónico',
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                      color: const Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                      },
-                      child: Text(
-                        'Cancelar',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Aquí puedes implementar la lógica para enviar un correo de restablecimiento de contraseña.
-                        // Simulamos un mensaje de éxito por ahora.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Se ha enviado un correo de restablecimiento de contraseña a $email'),
-                          ),
-                        );
-                        Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                      ),
-                      child: Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+              },
+              child: Text('Cancelar'),
             ),
-          ),
+            ElevatedButton(
+              onPressed: () {
+                // Lógica para enviar instrucciones de recuperación de contraseña aquí
+                Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+                _showPasswordRecoverySentDialog(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              child: Text('Enviar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showPasswordRecoverySentDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Instrucciones enviadas'),
+          content: Text('Hemos enviado instrucciones para recuperar tu contraseña a tu correo electrónico.'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cerrar el cuadro de diálogo
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              child: Text('Aceptar'),
+            ),
+          ],
         );
       },
     );
   }
 
   void _navigateToVIPPage(BuildContext context) {
-    // Navegar a la página VIP solo si la autenticación VIP es exitosa.
-    if (isVipAuthenticated) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VipForecastScreen(),
-        ),
-      );
-    } else {
-      // Mostrar un mensaje de error o realizar alguna acción si la autenticación falla.
-      // Puedes agregar aquí un SnackBar o un AlertDialog para informar al usuario.
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VipPage(),
+      ),
+    );
   }
 
   void _navigateToMembershipScreen(BuildContext context) {
@@ -437,86 +419,91 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                children: matches.map((match) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: ListTile(
-                        title: Column(
-                          children: [
-                            Text(
-                              '${match.teamA} vs ${match.teamB}',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 5, 4, 77),
-                              ),
-                            ),
-                            SizedBox(height: 8.0),
-                            Text(
-                              // Agregando texto personalizado para ambos partidos
-                              match.teamA == 'Manchester United' && match.teamB == 'Real Madrid'
-                                  ? 'Mas de 2.5 goles'
-                                  : match.teamA == 'Milan' && match.teamB == 'Liverpool'
-                                      ? 'Ambos marcan 1ra mitad'
-                                      : 'Texto por defecto para otros partidos',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Color.fromARGB(255, 5, 4, 77),
-                              ),
-                            ),
-                            SizedBox(height: 8.0),
-                            if (match.isFinished)
-                              Text(
-                                'Resultado: ${match.scoreTeamA} - ${match.scoreTeamB}',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Color.fromARGB(255, 5, 4, 77),
-                                ),
-                              )
-                            else
-                              Text(
-                                'Hoy 14:30',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Color.fromARGB(255, 5, 4, 77),
-                                ),
-                              ),
-                            SizedBox(height: 8.0),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MatchDetailsScreen(match: match),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.blue,
-                              ),
-                              child: Text(
-                                'Detalles',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+  children: matches.map((match) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 255, 255, 255),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            title: Column(
+              children: [
+                Text(
+                  '${match.teamA} vs ${match.teamB}',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 5, 4, 77),
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  match.teamA == 'Manchester United' && match.teamB == 'Real Madrid'
+                      ? 'Mas de 2.5 goles'
+                      : match.teamA == 'Milan' && match.teamB == 'Liverpool'
+                          ? 'Ambos marcan 1ra mitad'
+                          : 'Disparo a puerta De Jong + 1.5', // Cambiar el texto según sea necesario
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Color.fromARGB(255, 5, 4, 77),
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                if (match.isFinished)
+                  Text(
+                    'Resultado: ${match.scoreTeamA} - ${match.scoreTeamB}',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Color.fromARGB(255, 5, 4, 77),
                     ),
-                  );
-                }).toList(),
+                  )
+                else
+                  Text(
+                    'Hoy 14:30',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Color.fromARGB(255, 5, 4, 77),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8.0),
+          ElevatedButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MatchDetailsScreen(match: match),
+      ),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    primary: Colors.blue,
+  ),
+  child: Text(
+    'Cuota ${match.teamA == 'Manchester United' && match.teamB == 'Real Madrid' ? '1.45' : '1.33'}', // Modificar el texto según sea necesario
+    style: TextStyle(
+      fontSize: 16.0,
+      color: Colors.white,
+    ),
+  ),
+),
+
+        ],
+      ),
+    ),
+  );
+}).toList(),
               ),
             ),
             Spacer(),
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   margin: EdgeInsets.all(10.0),
@@ -526,246 +513,252 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.all(10.0),
-                  width: 155.0,
+                  width: 150.0,
                   height: 70.0,
-                  child: buildForecastButton(context, 'Membresia', 'Membership'),
+                  child: buildForecastButton(context, 'Premium', 'Membership'),
                 ),
               ],
             ),
+            SizedBox(height: 20.0),
           ],
         ),
-      ),
-    );
-  }
-
-  TextStyle _getTextStyle(Match match) {
-    if (match.teamA == 'Manchester United' && match.teamB == 'Real Madrid') {
-      return TextStyle(
-        color: Color.fromARGB(255, 255, 255, 255),
-        fontSize: 19.0,
-        fontWeight: FontWeight.bold,
-      );
-    } else if (match.teamA == 'Milan' && match.teamB == 'Liverpool') {
-      return TextStyle(
-        color: Color.fromARGB(255, 255, 255, 255),
-        fontSize: 19.0,
-        fontWeight: FontWeight.bold,
-      );
-    } else {
-      return TextStyle(
-        color: Color.fromARGB(199, 255, 255, 255),
-        fontSize: 16.0,
-        fontWeight: FontWeight.normal,
-      );
-    }
-  }
-}
-
-class MatchDetailsScreen extends StatelessWidget {
-  final Match match;
-
-  MatchDetailsScreen({required this.match});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${match.teamA} vs ${match.teamB}'),
-        centerTitle: true,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            match.details.image,
-            width: 200,
-            height: 200,
-          ),
-          SizedBox(height: 10),
-          Text(match.details.text),
-          SizedBox(height: 10),
-          Text('Fecha: ${match.date.toString()}'),
-        ],
       ),
     );
   }
 }
 
 class FreeForecastScreen extends StatelessWidget {
+  const FreeForecastScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pronóstico Gratis'),
+        title: Text(
+          'Pronósticos Gratuitos',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
-      body: GridView.count(
-        crossAxisCount: 1,
-        children: List.generate(1, (index) {
-          return GestureDetector(
-            onTap: () {
-              // Acción cuando se toca una casilla (si es necesario).
-            },
-            child: Container(
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(width: 2.0, color: Color.fromARGB(255, 41, 1, 94)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/fondo1.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ListView(
                 children: [
-                  Icon(
-                    Icons.sports_soccer,
-                    size: 50.0,
-                    color: Colors.blue,
+                  ForecastItem(
+                    title: 'Manchester United vs Real Madrid',
+                    description: 'Más de 2.5 goles',
+                    imagePath: 'assets/partidou.png',
                   ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'Equipo A vs Equipo B',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  Text(
-                    'Fecha: DD/MM/AAAA',
-                    style: TextStyle(fontSize: 16.0),
+                  // Eliminado el pronóstico "Milan vs Liverpool"
+                  ForecastItem(
+                    title: 'Barcelona vs Bayern Munich',
+                    description: 'Bayern Munchen X2',
+                    imagePath: 'assets/partido3.jpg',
                   ),
                 ],
               ),
             ),
-          );
-        }),
-      ),
-    );
-  }
-}
-
-class VipForecastScreen extends StatelessWidget {
-  final List<Match> vipMatches = [
-    Match(
-      teamA: 'Equipo C',
-      teamB: 'Equipo D',
-      date: DateTime.now(),
-      details: MatchDetails(
-        image: 'assets/match_image_1.jpg',
-        text: 'Texto sobre el partido Equipo C vs Equipo D.',
-      ),
-    ),
-    Match(
-      teamA: 'Equipo E',
-      teamB: 'Equipo F',
-      date: DateTime.now(),
-      details: MatchDetails(
-        image: 'assets/match_image_2.jpg',
-        text: 'Texto sobre el partido Equipo E vs Equipo F.',
-      ),
-    ),
-    // Agrega más partidos VIP según sea necesario
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pronósticos VIP'),
-      ),
-      body: Card(
-        elevation: 4.0,
-        margin: EdgeInsets.all(8.0),
-        child: ExpansionTile(
-          title: Center(
-            child: Text(
-              'Pronósticos VIP:',
-              style: TextStyle(
-                color: Color.fromARGB(255, 5, 4, 77),
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          children: vipMatches.map((match) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: Color.fromARGB(255, 2, 2, 2), width: 2.0),
-                ),
-                child: Center(
-                  child: ListTile(
-                    tileColor: Color.fromARGB(255, 0, 0, 0),
-                    title: Text(
-                      '${match.teamA} vs ${match.teamB}',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Fecha: ${match.date.toString()}',
-                      style: TextStyle(
-                        color: Color.fromARGB(199, 255, 255, 255),
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MatchDetailsScreen(match: match),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                      ),
-                      child: Text(
-                        'Detalles',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
+          ],
         ),
       ),
     );
   }
 }
 
-class MembershipScreen extends StatelessWidget {
+class VipForecastScreen extends StatelessWidget {
+  const VipForecastScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Membresía'),
+        title: Text(
+          'Pronósticos VIP',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
-      body: Center(
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/fondo2.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  ForecastItem(
+                    title: 'Pronóstico VIP 1',
+                    description: 'Descripción del pronóstico VIP 1',
+                    imagePath: 'assets/pronosticovip1.jpg',
+                  ),
+                  ForecastItem(
+                    title: 'Pronóstico VIP 2',
+                    description: 'Descripción del pronóstico VIP 2',
+                    imagePath: 'assets/pronosticovip2.jpg',
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ForecastItem extends StatelessWidget {
+  final String title;
+  final String description;
+  final String imagePath;
+
+  const ForecastItem({
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.imagePath,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.only(bottom: 16.0),
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.cover,
+              height: 150.0,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MatchDetailsScreen extends StatelessWidget {
+  final Match match;
+
+  const MatchDetailsScreen({Key? key, required this.match}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Detalles del Partido',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/fondo3.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '¡Conviértete en miembro VIP para acceder a pronósticos exclusivos!',
+              '${match.teamA} vs ${match.teamB}',
               style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 24.0,
                 fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 5, 4, 77),
               ),
-              textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 16.0),
+            Text(
+              'Fecha del Partido: ${match.date.toLocal()}',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Descripción del partido:',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              match.details.text,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context); // Cerrar la pantalla de membresía
+                Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue,
@@ -782,5 +775,159 @@ class MembershipScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class VipPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Área VIP',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/fondo4.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Bienvenido al Área VIP',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Aquí encontrarás pronósticos exclusivos para nuestros miembros VIP.',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              child: Text(
+                'Volver',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MembershipScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Premium',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/fondo5.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Hazte Miembro VIP',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Obtén acceso exclusivo a pronósticos VIP y disfruta de beneficios adicionales al convertirte en miembro VIP.',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Color.fromARGB(255, 5, 4, 77),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                _launchURL('https://example.com/membership'); // Reemplaza con tu enlace de membresía
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              child: Text(
+                'Hazte Miembro',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+              child: Text(
+                'Volver',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'No se pudo abrir la URL: $url';
+    }
   }
 }
