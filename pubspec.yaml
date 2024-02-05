@@ -67,6 +67,7 @@ flutter:
   assets:
     - assets/
     - assets/wtp.png
+    - images/splash.png
 
 
  
