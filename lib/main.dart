@@ -56,9 +56,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> sliderImages = [
-    "assets/europal.jpg",
-    'assets/copa.jpg',
-    'assets/champions.jpg',
+    "assets/partido1.jpg",
+    'assets/partido2.jpg',
+    'assets/partido3.jpg',
   ];
 
   final List<Match> matches = [
