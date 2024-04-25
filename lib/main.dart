@@ -146,134 +146,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showVipVerificationDialog(BuildContext context) {
-    String? email;
-    String? password;
+  String? email;
+  String? password;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Verificación VIP',
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                Text(
-                  'Ingresa tu correo y contraseña VIP para acceder a pronósticos exclusivos.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Correo electrónico',
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                      color: const Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
-                  obscureText: true,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); 
-                      },
-                      child: Text(
-                        'Cancelar',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Realizar la verificación VIP con el servidor aquí.
-                        // Simulamos verificación exitosa por ahora.
-                        isVipAuthenticated = true;
-                        Navigator.of(context).pop(); 
-                        _navigateToVIPPage(context); 
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                      ),
-                      child: Text(
-                        'Aceptar',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        _showForgotPasswordDialog(context);
-                      },
-                      child: Text(
-                        '¿Olvidaste tu contraseña?',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showForgotPasswordDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Recuperar contraseña'),
-          content: Column(
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Ingresa tu correo electrónico y te enviaremos instrucciones para recuperar tu contraseña.'),
+              Text(
+                'Verificación VIP',
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Ingresa tu correo y contraseña VIP para acceder a pronósticos exclusivos.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16.0),
+              ),
               SizedBox(height: 16.0),
               TextField(
                 decoration: InputDecoration(
@@ -283,31 +184,169 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
+                onChanged: (value) {
+                  email = value;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Contraseña',
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+                obscureText: true,
+                onChanged: (value) {
+                  password = value;
+                },
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); 
+                    },
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (email == null || email!.isEmpty || password == null || password!.isEmpty) {
+                        // Mostrar alerta si el correo o la contraseña están vacíos
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Error!'),
+                              content: Text('Debes ingresar el correo y/o la contraseña.'),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); 
+                                  },
+                                  child: Text('Aceptar'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        // Realizar la verificación VIP con el servidor aquí.
+                        // Simulamos verificación exitosa por ahora.
+                        isVipAuthenticated = true;
+                        Navigator.of(context).pop(); 
+                        _navigateToVIPPage(context); 
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                    child: Text(
+                      '',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      _showForgotPasswordDialog(context);
+                    },
+                    child: Text(
+                      '¿Olvidaste tu contraseña?',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); 
-              },
-              child: Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); 
-                _showPasswordRecoverySentDialog(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.green,
+        ),
+      );
+    },
+  );
+}
+
+
+  void _showForgotPasswordDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          'Recuperar contraseña',
+          style: TextStyle(
+            fontSize: 25.0,
+            color: Colors.blue, // Color azul para el texto "Recuperar contraseña"
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Ingresa tu correo electrónico y te enviaremos instrucciones para recuperar tu contraseña.'),
+            SizedBox(height: 16.0),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Correo electrónico',
+                labelStyle: TextStyle(
+                  fontSize: 15.0,
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
-              child: Text('Enviar'),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); 
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.red, // Color rojo para el botón "Cancelar"
+            ),
+            child: Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(); 
+              _showPasswordRecoverySentDialog(context);
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.blue, // Color azul para el botón "Enviar"
+            ),
+            child: Text(
+              'Enviar',
+              style: TextStyle(
+                color: Colors.white, // Color blanco para el texto del botón "Enviar"
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
 
   void _showPasswordRecoverySentDialog(BuildContext context) {
     showDialog(
