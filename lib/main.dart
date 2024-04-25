@@ -250,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       primary: Colors.green,
                     ),
                     child: Text(
-                      '',
+                      'Ingresar',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.white,
