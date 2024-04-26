@@ -21,6 +21,7 @@ class Match {
   MatchDetails details;
 
   Match({
+
     required this.teamA,
     required this.teamB,
     required this.date,
@@ -111,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (route == 'VIP') {
           _showVipVerificationDialog(context);
         } else if (route == 'Membership') {
-          _navigateToMembershipScreen(context);
+          (context);
         } else {
           Navigator.push(
             context,
@@ -380,91 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _navigateToMembershipScreen(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          'Registro VIP',
-          style: TextStyle(
-            fontSize: 25.0,
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Nombre',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                ),
-              ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Correo electrónico',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                ),
-              ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Contraseña',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                ),
-              ),
-              obscureText: true,
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Confirmar contraseña',
-                labelStyle: TextStyle(
-                  fontSize: 15.0,
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                ),
-              ),
-              obscureText: true,
-            ),
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              // Aquí se puede implementar la lógica de pago si es necesario.
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Colors.green, // Color verde para el botón "Pagar"
-            ),
-            child: Text(
-              'Pagar',
-              style: TextStyle(
-                color: Colors.white, // Color blanco para el texto del botón "Pagar"
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            style: TextButton.styleFrom(
-              primary: Colors.red, // Color rojo para el botón "Cancelar"
-            ),
-            child: Text('Cancelar'),
-          ),
-        ],
-      );
-    },
-  );
-}
+  
 
 
 
@@ -580,7 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 else
                                   Text(
-                                    'Hoy 14:30',
+                                    'Hoy 14:55',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       color: Color.fromARGB(255, 5, 4, 77),
@@ -591,25 +508,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 8.0),
                           ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MatchDetailsScreen(match: match),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
-                            ),
-                            child: Text(
-                              'Cuota ${match.teamA == 'Manchester United' && match.teamB == 'Real Madrid' ? '1.45' : '1.33'}',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+  onPressed: () {
+    // Aquí elimina la navegación hacia la pantalla "Detalles del Partido"
+  },
+  style: ElevatedButton.styleFrom(
+    primary: Colors.blue,
+  ),
+  child: Text(
+    'Cuota ${match.teamA == 'Manchester United' && match.teamB == 'Real Madrid' ? '1.45' : '1.33'}',
+    style: TextStyle(
+      fontSize: 16.0,
+      color: Colors.white,
+    ),
+  ),
+),
+
                         ],
                       ),
                     ),
@@ -627,12 +540,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 70.0,
                   child: buildForecastButton(context, 'VIP', 'VIP'),
                 ),
-                Container(
-                  margin: EdgeInsets.all(10.0),
-                  width: 150.0,
-                  height: 70.0,
-                  child: buildForecastButton(context, 'Hazte VIP', 'Membership'),
-                ),
+                
               ],
             ),
             SizedBox(height: 20.0),
