@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Encuentra Tu Mascota',
+                  'EncuentraTuMascota',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
