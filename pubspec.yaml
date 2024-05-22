@@ -21,7 +21,10 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+  fonts:
+    - family: Calistoga
+      fonts:
+      - asset: fonts/Calistoga-Regular.ttf
   uses-material-design: true
   assets:
     - assets/
-    - assets/wtp.png

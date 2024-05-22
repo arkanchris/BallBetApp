@@ -67,19 +67,19 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'EncuentraTuMascota',
+                  'Encuentra Tu Mascota',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 25.0,
-                    fontFamily: 'Roboto', // Fuente más divertida
+                    fontFamily: 'Calistoga',
                   ),
                 ),
                 Icon(
                   Icons.pets,
                   color: Colors.white,
                   size: 30.0,
-                ), // Icono de huella
+                ),
               ],
             ),
           ],
