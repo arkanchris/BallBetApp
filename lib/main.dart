@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               ),
               child: Text(
-                'Dar en adopción',
+                'Dar en adopciónes',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.0,
