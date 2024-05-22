@@ -8,12 +8,14 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.2.4 <4.0.0'
 
+
 dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.1.13
   flutter_svg: ^0.22.0
   cupertino_icons: ^1.0.2
+  image_picker: ^0.8.4+2
 
 dev_dependencies:
   flutter_test:
@@ -30,4 +32,3 @@ flutter:
     - family: Calistoga
       fonts:
         - asset: fonts/Calistoga-Regular.ttf
-
