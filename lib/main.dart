@@ -35,9 +35,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> sliderImages = [
-    "assets/partido1.jpg",
-    'assets/partido2.jpg',
-    'assets/partido4.jpg',
+    "assets/perrito1.jpg",
+    'assets/perrito2.jpg',
   ];
 
   final PageController _pageController = PageController();
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/estadiof.jpg'),
+            image: AssetImage('assets/patitas.png'),
             fit: BoxFit.cover,
           ),
         ),
