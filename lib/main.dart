@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/patitas.png'),
+            image: AssetImage('assets/patitas.jpg'),
             fit: BoxFit.cover,
           ),
         ),
