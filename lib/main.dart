@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icon(
                   Icons.pets,
                   color: Colors.white,
-                  size: 40.0,
+                  size: 30.0,
                 ), // Icono de huella
               ],
             ),
